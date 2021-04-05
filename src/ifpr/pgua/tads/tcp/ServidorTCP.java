@@ -9,6 +9,8 @@ public class ServidorTCP {
 
     private ServerSocket servidor;
     private Socket cliente;
+
+
     private String HOST;
     private int PORTA;
 
@@ -44,8 +46,19 @@ public class ServidorTCP {
                 if(msgEntrada.toLowerCase().equals("sair")){
                     break;
                 }
-                msgEntrada = msgEntrada.toUpperCase();
-                saida.write(msgEntrada+"\n");
+                if(msgEntrada.toLowerCase().startsWith("contar:")){
+                    String[] tokens = msgEntrada.split(":");
+
+                    String msg = tokens[1];
+
+                    int cont = msg.length();
+                    saida.write("Contém "+cont+" caracteres\n");
+
+                }else{
+                    msgEntrada = msgEntrada.toUpperCase();
+                    saida.write(msgEntrada+"\n");
+                }
+
                 saida.flush();
 
             }
